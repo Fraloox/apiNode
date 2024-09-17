@@ -1,9 +1,9 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import { Profesor } from "./profesoresModel";
 import { Estudiante } from "./estudiantesModel";
 
 @Entity('cursos')
-export class Curso {
+export class Curso extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;

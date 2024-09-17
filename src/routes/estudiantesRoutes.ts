@@ -1,5 +1,6 @@
 import express from 'express';
 import estudiantesController from '../controllers/estudiantesController';
+
 const router = express.Router();
 
 router.get('/', estudiantesController.consultar);

@@ -1,21 +1,14 @@
 import { Request, Response } from "express";
-import { AppDataSource } from '../db/conexion';
 import { Estudiante } from '../models/estudiantesModel';
-import { Repository } from "typeorm";
 
 
 class EstudiantesController {
-    private estudiante: Repository<Estudiante>;
 
-    constructor() {
-
-        this.estudiante = AppDataSource.getRepository(Estudiante);
-
-    }
+    constructor() { }
 
     async consultar(req: Request, res: Response) {
         try {
-            const data = await this.estudiante.find();
+            const data = await Estudiante.find();
             res.status(200).json(data);
 
         } catch (err) {
@@ -28,7 +21,7 @@ class EstudiantesController {
         const { id } = req.params;
         try {
 
-            const registro = await this.estudiante.findOneBy({ id: Number(id) });
+            const registro = await Estudiante.findOneBy({ id: Number(id) });
             if (!registro) {
                 throw new Error('Estudiante no encontrado');
             }
@@ -44,7 +37,7 @@ class EstudiantesController {
     async ingresar(req: Request, res: Response) {
         try {
 
-            const registro = await this.estudiante.save(req.body);
+            const registro = await Estudiante.save(req.body);
             res.status(201).json(registro);
 
         } catch (err) {
@@ -60,14 +53,16 @@ class EstudiantesController {
 
         try {
 
-            const registro = await this.estudiante.findOneBy({ id: Number(id) });
+            const registro = await Estudiante.findOneBy({ id: Number(id) });
+
             if (!registro) {
                 throw new Error('Estudiante no encontrado');
-            } else {
-                await this.estudiante.update({ id: Number(id) }, req.body);
-                const registroActualizado = await this.estudiante.findOneBy({ id: Number(id) });
-                res.send(200).json(registroActualizado);
             }
+
+            await Estudiante.update({ id: Number(id) }, req.body);
+            const registroActualizado = await Estudiante.findOneBy({ id: Number(id) });
+            res.send(200).json(registroActualizado);
+
 
         } catch (err) {
             if (err instanceof Error)
@@ -81,13 +76,14 @@ class EstudiantesController {
 
         try {
 
-            const registro = await this.estudiante.findOneBy({ id: Number(id) });
+            const registro = await Estudiante.findOneBy({ id: Number(id) });
+
             if (!registro) {
                 throw new Error('Estudiante no encontrado');
-            } else {
-                await this.estudiante.update({ id: Number(id) }, req.body);
-                res.send(204);
             }
+
+            await Estudiante.update({ id: Number(id) }, req.body);
+            res.send(204);
 
         } catch (err) {
             if (err instanceof Error)
