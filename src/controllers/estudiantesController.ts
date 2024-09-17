@@ -82,8 +82,8 @@ class EstudiantesController {
                 throw new Error('Estudiante no encontrado');
             }
 
-            await Estudiante.update({ id: Number(id) }, req.body);
-            res.send(204);
+            await Estudiante.delete({ id: Number(id) });
+            res.status(204);
 
         } catch (err) {
             if (err instanceof Error)

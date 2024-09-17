@@ -9,9 +9,6 @@ export class Curso extends BaseEntity {
     id: number;
 
     @Column()
-    dni: String;
-
-    @Column()
     nombre: String;
 
     @Column('text')
